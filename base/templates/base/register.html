@@ -1,0 +1,44 @@
+{% extends 'base/main.html' %} {% block content %}
+
+<div class="header-bar">
+  <h1>REGISTRATION FORM</h1>
+</div>
+<div class="card-body">
+  <form action="" method="POST">
+    {% csrf_token %}
+    <label>{{ form.username.label }}</label>
+    {{ form.username }}
+
+    <label>{{ form.first_name.label }}</label>
+    {{ form.first_name }}
+
+    <label>{{ form.last_name.label }}</label>
+    {{ form.last_name }}
+
+    <label>{{ form.email.label }}</label>
+    {{ form.email }}
+
+    <label>{{ form.password1.label }}</label>
+    {{ form.password1 }}
+
+    <label>{{ form.password2.label }}</label>
+    {{ form.password2 }}
+    <br /><br />
+    <input class="button" type="submit" value="Register Now" />
+
+    {% if form.errors %}
+    <ul>
+      {% for key,value in form.errors.items %}
+      <li>{{ key|escape }} : {{ value|escape }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <small
+      ><p>
+        Have an account already? <a href="{% url 'login' %}">Login Now</a>
+      </p></small
+    >
+  </form>
+</div>
+{% endblock content %}

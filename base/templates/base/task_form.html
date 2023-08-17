@@ -1,0 +1,93 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+      }
+      
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      
+      select {
+        font-size: 16px;
+        padding: 5px;
+      }
+      
+      .progress-bar {
+        width: 300px;
+        height: 20px;
+        border: 1px solid #ccc;
+        background-color: #f0f0f0;
+        margin-top: 10px;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .progress {
+        height: 100%;
+        background-color: #007bff;
+        width: 0%; /* Initial width is 0% */
+        transition: width 0.3s ease; /* Add transition for smooth progress updates */
+      
+      }
+</style>
+<div class="header-bar">
+    <a href="{% url 'tasks' %}">&#8592; Back</a>
+</div>
+
+<div class="card-body">
+    <form method="POST" action="" >
+        {% csrf_token %}
+        {{  form.as_p }}
+        <div class="progress-bar">
+            <div id="progress" class="progress"></div>
+          </div>
+            <label for="progress">Progress:</label>
+  <select id="numberDropdown">
+    <option value="20">20%</option>
+    <option value="40">40%</option>
+    <option value="60">60%</option>
+    <option value="80">80%</option>
+    <option value="100">100%</option>
+   
+    <!-- Add more options as needed -->
+  </select>
+</div>
+        <input class="button" type="submit" value="Save Task">
+    </form>
+</div>
+<script>
+    const numberDropdown = document.getElementById("numberDropdown");
+const progressBar = document.getElementById("progress");
+
+// Load the saved level from local storage on page load
+const savedLevel = localStorage.getItem("selectedLevel");
+if (savedLevel !== null) {
+  progressBar.style.width = `${savedLevel}%`;
+}
+
+numberDropdown.addEventListener("change", function() {
+  const selectedLevel = parseInt(numberDropdown.value, 10);
+  progressBar.style.width = `${selectedLevel}%`;
+
+  // Save the selected level to local storage
+  localStorage.setItem("selectedLevel", selectedLevel);
+});
+</script>
+
+{% endblock content %}
+
+
+
+
+<!--
+<h3>Task Form</h3>
+<a href="{% url 'tasks' %}">Go back </a>
+<form method="POST" action="">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="submit">
+</form>-->
